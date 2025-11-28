@@ -12,7 +12,7 @@ def reqister_user(request):
         form = UserCrateForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponse(status=200)
+            return HttpResponse(status=302)
     else:
         form = UserCrateForm()
     
