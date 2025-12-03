@@ -33,6 +33,9 @@ DEBUG = env("DEBUG")
 
 ALLOWED_HOSTS = []
 
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REIDRECT_URL = "/"
+
 
 # Application definition
 
@@ -46,6 +49,8 @@ INSTALLED_APPS = [
 
     # Локальні
     "accounts",
+    "core",
+    "groups",
 ]
 
 MIDDLEWARE = [
@@ -63,7 +68,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

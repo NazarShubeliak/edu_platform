@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Register{% endblock %}
+ 
+{% block content %}
+  <h2>Реєстрація нового користувача</h2>
+
+  {% if form.errors %}
+    <p style="color:red;">Будь ласка, виправте помилки у формі.</p>
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+    <div>
+      <label for="id_username">Ім'я користувача:</label>
+      {{ form.username }}
+    </div>
+    <div>
+      <label for="id_email">Email:</label>
+      {{ form.email }}
+    </div>
+    <div>
+      <label for="id_password">Пароль:</label>
+      {{ form.password }}
+    </div>
+    <div>
+      <label for="id_role">Роль:</label>
+      {{ form.role }}
+    </div>
+    <button type="submit">Зареєструвати</button>
+  </form>
+{% endblock %}

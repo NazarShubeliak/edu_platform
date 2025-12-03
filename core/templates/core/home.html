@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Головна{% endblock %}
+
+{% block content %}
+
+  <h1>Головна</h1>
+
+  {% if user.is_authenticated %}
+    {% if user.role == "admin" or user.role == "theacher" %}
+    <a href="{% url 'create_group' %}">Створити групу</a> 
+    {% endif %}
+  {% endif %}
+
+{% endblock %}
