@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.http.response import HttpResponse
+# from django.http.response import HttpResponse
 from .forms import UserCrateForm
 
 @login_required
 def reqister_user(request):
     if request.user.role not in ["admin", "teacher"]:
-        return redirect("")
+        return redirect("home")
     
     if request.method == "POST":
         form = UserCrateForm(request.POST)

@@ -1,5 +1,5 @@
 from django import forms
-from .models import User
+from .models import User, StudentProfile
 
 class UserCrateForm(forms.ModelForm):
     # Для того щоб у формі було <input type="password">
@@ -14,4 +14,7 @@ class UserCrateForm(forms.ModelForm):
         user.set_password(self.cleaned_data["password"])
         if commit:
             user.save()
+            if user.role == "student":
+                StudentProfile.objects.create(user=user)
+
         return user

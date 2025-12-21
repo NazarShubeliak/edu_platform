@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Група {{ group.name }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Група {{ group.name }}</h2>
+
+    <h4>Студенти у групі:</h4>
+    <ul>
+        {% for student in students %}
+            <li>
+                {{ student.user.username }}
+                <form method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <input type="hidden" name="student_id" value="{{ student.id }}">
+                    <input type="hidden" name="action" value="remove">
+                    <button type="submit" class="btn btn-sm btn-danger">Видалити</button>
+                </form>
+            </li>
+        {% empty %}
+            <li class="text-muted">Немає студентів у групі</li>
+        {% endfor %}
+    </ul>
+
+    <h4 class="mt-4">Додати студента:</h4>
+    <form method="post">
+        {% csrf_token %}
+        <select name="student_id" class="form-select mb-2">
+            {% for student in available_students %}
+                <option value="{{ student.id }}">{{ student.user.username }}</option>
+            {% endfor %}
+        </select>
+        <input type="hidden" name="action" value="add">
+        <button type="submit" class="btn btn-primary">Додати</button>
+    </form>
+</div>
+{% endblock %}
+

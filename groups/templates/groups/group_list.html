@@ -13,19 +13,8 @@
             <div class="col-md-6 mb-3">
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <h5 class="card-title">{{ group.name }}</h5>
-                        <p class="card-text">
-                            <strong>Студенти:</strong>
-                            {% if group.students.all %}
-                                <ul>
-                                    {% for student in group.students.all %}
-                                        <li>{{ student.username }}</li>
-                                    {% endfor %}
-                                </ul>
-                            {% else %}
-                                <span class="text-muted">Немає студентів</span>
-                            {% endif %}
-                        </p>
+                        <a href="{% url 'group_detail' pk=group.id %}">{{ group.name }}</a>
+                        <p>Кількість студентів: {{ group.students.all|length }}</p>
                     </div>
                 </div>
             </div>

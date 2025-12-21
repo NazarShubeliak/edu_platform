@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from groups.models import Group
 
 # Create your models here.
 class User(AbstractUser):
@@ -14,3 +15,10 @@ class User(AbstractUser):
 
     def __str__(self):
         return f"{self.username} ({self.role})"
+
+class StudentProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True, blank=True, related_name="students")
+
+    def __str__(self):
+        return self.user.username
