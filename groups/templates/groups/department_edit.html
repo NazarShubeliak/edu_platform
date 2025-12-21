@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Редагувати кафедру</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="id_name" class="form-label">Назва кафедри</label>
+            <input type="text" name="name" id="id_name" class="form-control"
+                   value="{{ department.name }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="id_description" class="form-label">Опис</label>
+            <textarea name="description" id="id_description" class="form-control">{{ department.description }}</textarea>
+        </div>
+        <select name="groups" id="id_groups" class="form-select" multiple>
+          {% for group in groups %}
+            <option value="{{ group.id }}"
+              {% if group in department.groups.all %}selected{% endif %}>
+              {{ group.name }}
+            </option>
+          {% endfor %}
+        </select>
+
+
+        <button type="submit" class="btn btn-primary">Зберегти</button>
+        <a href="{% url 'department_list' %}" class="btn btn-secondary">Назад</a>
+    </form>
+  <script>
+    $(document).ready(function() {
+      $('#id_groups').select2({
+        placeholder: "Виберіть групи",
+        width: '100%'
+      });
+    });
+  </script>
+</div>
+{% endblock %}
+

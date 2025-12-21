@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
-from .models import Group 
+from .models import Group, Department
 from accounts.models import StudentProfile
 
 User = get_user_model()
@@ -56,6 +56,65 @@ def group_detail(request, pk):
         "students": students,
         "available_students": available_students
     })
+
+@login_required
+def department_list(request):
+    if request.user.role not in ["teacher", "admin"]:
+        redirect("home")
+
+    departments = Department.objects.all()
+    return render(request, "groups/department_list.html", {"departments": departments})
+
+
+@login_required
+def create_department(request):
+    if request.user.role not in ["teacher", "admin"]:
+        redirect("home")
+
+    if request.method == "POST":
+        name = request.POST.get("name")
+        description = request.POST.get("description")
+
+        Department.objects.create(name=name, description=description, created_by=request.user)
+
+        return redirect("department_list")
+
+    return render(request, "groups/create_department.html")
+
+@login_required
+def department_edit(request, pk):
+    if request.user.role not in ["teacher", "admin"]:
+        redirect("home")
+
+    department = get_object_or_404(Department, pk=pk)
+    groups = Group.objects.all()
+
+    if request.method == "POST":
+        department.name = request.POST.get("name")
+        department.description = request.POST.get("description")
+        department.save()
+
+        selected_groups = request.POST.get("groups")
+        department.groups.set(Group.objects.filter(id__in=selected_groups))
+
+        return redirect("department_edit", pk=pk)
+
+    return render(request, "groups/department_edit.html", {
+        "department": department,
+        "groups": groups
+    })
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

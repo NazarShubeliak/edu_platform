@@ -8,6 +8,8 @@
     {% if user.role == "admin" or user.role == "teacher" %}
         <a href="{% url 'create_group' %}">Створити групу</a> 
         <a href="{% url 'group_list' %}">Всі групи</a> 
+        <a href="{% url 'students_list' %}">Всі учні</a> 
+        <a href="{% url 'department_list' %}">Всі кафедри</a> 
     {% endif %}
         <h1>Вітаємо {{user.username}}</h1>
   {% else %}

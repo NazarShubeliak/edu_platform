@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-3">Створити кафедру</h2>
+
+  <!-- Повідомлення про помилки/успіх (якщо використовуєш messages framework) -->
+  {% if messages %}
+    <div class="mb-3">
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <!-- Форма створення кафедри -->
+  <form method="post" class="card shadow-sm">
+    {% csrf_token %}
+    <div class="card-body">
+      <div class="mb-3">
+        <label for="id_name" class="form-label">Назва кафедри</label>
+        <input
+          type="text"
+          name="name"
+          id="id_name"
+          class="form-control"
+          placeholder="Наприклад: Кафедра математики"
+          required
+          value="{{ request.POST.name|default:'' }}"
+        >
+        {% if form and form.errors.name %}
+          <div class="text-danger small mt-1">{{ form.errors.name.0 }}</div>
+        {% endif %}
+      </div>
+
+      <div class="mb-3">
+        <label for="id_description" class="form-label">Опис</label>
+        <textarea
+          name="description"
+          id="id_description"
+          class="form-control"
+          rows="3"
+          placeholder="Короткий опис кафедри"
+        >{{ request.POST.description|default:'' }}</textarea>
+        {% if form and form.errors.description %}
+          <div class="text-danger small mt-1">{{ form.errors.description.0 }}</div>
+        {% endif %}
+      </div>
+
+      <!-- Необов’язково: одразу прив’язати групи до кафедри (ManyToMany) -->
+      {% if groups %}
+        <div class="mb-3">
+          <label for="id_groups" class="form-label">Додати групи до кафедри (необов’язково)</label>
+          <select
+            name="group_ids"
+            id="id_groups"
+            class="form-select"
+            multiple
+          >
+            {% for group in groups %}
+              <option value="{{ group.id }}">{{ group.name }}</option>
+            {% endfor %}
+          </select>
+          <div class="form-text">Утримуй Ctrl (Windows/Linux) або Cmd (macOS), щоб вибрати кілька груп.</div>
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="card-footer d-flex gap-2">
+      <button type="submit" class="btn btn-primary">Створити</button>
+      <a href="{% url 'department_list' %}" class="btn btn-outline-secondary">До списку кафедр</a>
+    </div>
+  </form>
+</div>
+{% endblock %}
+

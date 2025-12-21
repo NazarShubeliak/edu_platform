@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Список груп{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mb-4">Список кафедр</h2>
+
+    <a href="{% url 'create_department' %}" class="btn btn-primary mb-3">Створити нову кафедру</a>
+
+    <div class="row">
+        {% for department in departments %}
+            <div class="col-md-6 mb-3">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                      <a href="{% url 'department_edit' pk=department.id %}">{{ department.name }}</a>
+                        <p>Кількість Груп: {{ department.group.all|length }}</p>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-muted">Групи ще не створені.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
