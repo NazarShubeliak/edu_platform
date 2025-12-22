@@ -1,40 +1,68 @@
 {% extends "base.html" %}
-
 {% block content %}
 <div class="container mt-4">
-    <h2>Редагувати кафедру</h2>
-    <form method="post">
-        {% csrf_token %}
-        <div class="mb-3">
-            <label for="id_name" class="form-label">Назва кафедри</label>
-            <input type="text" name="name" id="id_name" class="form-control"
-                   value="{{ department.name }}" required>
-        </div>
-        <div class="mb-3">
-            <label for="id_description" class="form-label">Опис</label>
-            <textarea name="description" id="id_description" class="form-control">{{ department.description }}</textarea>
-        </div>
-        <select name="groups" id="id_groups" class="form-select" multiple>
-          {% for group in groups %}
-            <option value="{{ group.id }}"
-              {% if group in department.groups.all %}selected{% endif %}>
-              {{ group.name }}
-            </option>
+  <h2>Редагувати кафедру</h2>
+  <form method="post" id="departmentForm">
+    {% csrf_token %}
+    <div class="row">
+      <!-- Ліва колонка -->
+      <div class="col-md-5">
+        <h5>Доступні групи</h5>
+        <select id="availableGroups" class="form-select" size="10" multiple>
+          {% for group in availbable_groups %}
+            {% if group not in department.groups.all %}
+              <option value="{{ group.id }}">{{ group.name }}</option>
+            {% endif %}
           {% endfor %}
         </select>
+      </div>
 
+      <!-- Кнопки -->
+      <div class="col-md-2 d-flex flex-column justify-content-center align-items-center">
+        <button type="button" id="addGroup" class="btn btn-primary mb-2">&gt;&gt;</button>
+        <button type="button" id="removeGroup" class="btn btn-secondary">&lt;&lt;</button>
+      </div>
 
-        <button type="submit" class="btn btn-primary">Зберегти</button>
-        <a href="{% url 'department_list' %}" class="btn btn-secondary">Назад</a>
-    </form>
-  <script>
-    $(document).ready(function() {
-      $('#id_groups').select2({
-        placeholder: "Виберіть групи",
-        width: '100%'
-      });
-    });
-  </script>
+      <!-- Права колонка -->
+      <div class="col-md-5">
+        <h5>Групи кафедри</h5>
+        <select id="departmentGroups" name="groups" class="form-select" size="10" multiple>
+          {% for group in department.groups.all %}
+            <option value="{{ group.id }}">{{ group.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <div class="mt-3">
+      <button type="submit" class="btn btn-success">Зберегти</button>
+      <a href="{% url 'department_list' %}" class="btn btn-secondary">Назад</a>
+    </div>
+  </form>
 </div>
+
+<script>
+  const available = document.getElementById("availableGroups");
+  const selected = document.getElementById("departmentGroups");
+  const addBtn = document.getElementById("addGroup");
+  const removeBtn = document.getElementById("removeGroup");
+
+  addBtn.addEventListener("click", () => {
+    [...available.selectedOptions].forEach(opt => {
+      selected.appendChild(opt);
+    });
+  });
+
+  removeBtn.addEventListener("click", () => {
+    [...selected.selectedOptions].forEach(opt => {
+      available.appendChild(opt);
+    });
+  });
+
+  // Перед сабмітом позначаємо всі групи справа як вибрані
+  document.getElementById("departmentForm").addEventListener("submit", () => {
+    [...selected.options].forEach(opt => opt.selected = true);
+  });
+</script>
 {% endblock %}
 

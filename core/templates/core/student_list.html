@@ -6,7 +6,10 @@
     <ul>
         {% for student in students %}
             <li>{{ student.user.username }} — група: {{ student.group.name|default:"немає" }}</li>
-            <a href="{% url 'delete_student' pk=student.id %}">Видалити</a>
+            {% if user.role == 'admin' %}
+                <a href="{% url 'delete_student' pk=student.id %}">Видалити</a>
+                <a href="{% url 'edit_student' pk=student.user.id %}">Редагувати</a>
+            {% endif %}
         {% empty %}
             <li class="text-muted">Студентів поки немає</li>
         {% endfor %}

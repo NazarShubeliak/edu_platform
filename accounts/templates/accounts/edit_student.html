@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Редагувати користувача</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="id_username" class="form-label">Ім’я користувача</label>
+            <input type="text" name="username" id="id_username"
+                   class="form-control" value="{{ user.username }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="id_password" class="form-label">Новий пароль (необов’язково)</label>
+            <input type="password" name="password" id="id_password" class="form-control">
+            <div class="form-text">Залиш порожнім, якщо не хочеш змінювати пароль.</div>
+        </div>
+        <button type="submit" class="btn btn-primary">Зберегти</button>
+        <a href="{% url 'students_list' %}" class="btn btn-secondary">Назад</a>
+    </form>
+</div>
+{% endblock %}
+

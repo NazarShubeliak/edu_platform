@@ -87,21 +87,28 @@ def department_edit(request, pk):
         redirect("home")
 
     department = get_object_or_404(Department, pk=pk)
-    groups = Group.objects.all()
+    # groups = Group.objects.all()
+    availbable_groups = Group.objects.exclude(department=department)
 
     if request.method == "POST":
-        department.name = request.POST.get("name")
-        department.description = request.POST.get("description")
+        name = request.POST.get("name")
+        description = request.POST.get("description")
+
+        if name:  # тільки якщо є
+            department.name = name
+        if description is not None:
+            department.description = description
+
         department.save()
 
-        selected_groups = request.POST.get("groups")
+        selected_groups = request.POST.getlist("groups")
         department.groups.set(Group.objects.filter(id__in=selected_groups))
+        return redirect("department_list")
 
-        return redirect("department_edit", pk=pk)
 
     return render(request, "groups/department_edit.html", {
         "department": department,
-        "groups": groups
+        "availbable_groups": availbable_groups 
     })
 
 
