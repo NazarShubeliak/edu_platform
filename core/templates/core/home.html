@@ -10,6 +10,8 @@
         <a href="{% url 'group_list' %}">Всі групи</a> 
         <a href="{% url 'students_list' %}">Всі учні</a> 
         <a href="{% url 'department_list' %}">Всі кафедри</a> 
+    {% else %}
+        <a href="{% url 'profile' %}">Профіль</a> 
     {% endif %}
         <h1>Вітаємо {{user.username}}</h1>
   {% else %}

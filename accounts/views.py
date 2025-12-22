@@ -45,7 +45,31 @@ def edit_student(request, pk):
         return redirect("students_list") 
     return render(request, "accounts/edit_student.html", {"user": user})
 
+@login_required
+def student_profile(request):
+    # беремо поточного користувача
+    student = get_object_or_404(User, pk=request.user.id)
+    student_profile = get_object_or_404(StudentProfile, user=request.user)
 
+    # група студента
+    # group = getattr(student, "group", None)
+    group = student_profile.group
+
+    # файли групи
+    group_files = group.files.all() if group else []
+
+    # файли кафедри
+    department_files = []
+    if group:
+        for dep in group.department.all():
+            department_files += list(dep.files.all())
+
+    return render(request, "accounts/profile.html", {
+        "student": student,
+        "group": group,
+        "group_files": group_files,
+        "department_files": department_files,
+    })
 
 
 

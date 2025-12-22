@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Завантажити файл</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <!-- Вибір типу -->
+    <div class="mb-3">
+      <label class="form-label">Куди завантажити?</label>
+      <select name="target_type" id="target_type" class="form-select" required>
+        <option value="department">На кафедру</option>
+        <option value="group">У групу</option>
+      </select>
+    </div>
+
+    <!-- Селект кафедри -->
+    <div class="mb-3" id="department_select">
+      <label class="form-label">Виберіть кафедру</label>
+      <select name="department_id" class="form-select">
+        {% for department in departments %}
+          <option value="{{ department.id }}">{{ department.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <!-- Селект групи -->
+    <div class="mb-3" id="group_select" style="display:none;">
+      <label class="form-label">Виберіть групу</label>
+      <select name="group_id" class="form-select">
+        {% for group in groups %}
+          <option value="{{ group.id }}">{{ group.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <!-- Файл -->
+    <div class="mb-3">
+      <label class="form-label">Файл</label>
+      <input type="file" name="file" class="form-control" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Завантажити</button>
+  </form>
+</div>
+
+<script>
+  const targetType = document.getElementById("target_type");
+  const depSelect = document.getElementById("department_select");
+  const groupSelect = document.getElementById("group_select");
+
+  targetType.addEventListener("change", () => {
+    if (targetType.value === "department") {
+      depSelect.style.display = "block";
+      groupSelect.style.display = "none";
+    } else {
+      depSelect.style.display = "none";
+      groupSelect.style.display = "block";
+    }
+  });
+</script>
+{% endblock %}
+

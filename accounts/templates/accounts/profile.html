@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2>👤 Кабінет студента: {{ student.username }}</h2>
+
+  {% if group %}
+    <p><strong>Група:</strong> {{ group.name }}</p>
+  {% else %}
+    <p>Ви ще не належите до жодної групи.</p>
+  {% endif %}
+
+  <h3 class="mt-4">📂 Файли групи</h3>
+  {% if group_files %}
+    <ul class="list-group mb-3">
+      {% for f in group_files %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          {{ f.file.name|slice:"15:" }}
+          <span class="badge bg-info text-dark">Автор: {{ f.uploaded_by.username }}</span>
+          <a href="{{ f.file.url }}" class="btn btn-sm btn-primary">Завантажити</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Файлів у групі ще немає.</p>
+  {% endif %}
+
+  <h3 class="mt-4">🏛 Файли кафедри</h3>
+  {% if department_files %}
+    <ul class="list-group">
+      {% for f in department_files %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          {{ f.file.name|slice:"15:" }}
+          <span class="badge bg-secondary">Автор: {{ f.uploaded_by.username }}</span>
+          <a href="{{ f.file.url }}" class="btn btn-sm btn-primary">Завантажити</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Файлів на кафедрі ще немає.</p>
+  {% endif %}
+</div>
+{% endblock %}
+
