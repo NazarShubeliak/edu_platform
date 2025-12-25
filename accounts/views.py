@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
-# from django.http.response import HttpResponse
 from .models import StudentProfile, User
 from .forms import UserCrateForm
 
@@ -52,7 +51,6 @@ def student_profile(request):
     student_profile = get_object_or_404(StudentProfile, user=request.user)
 
     # група студента
-    # group = getattr(student, "group", None)
     group = student_profile.group
 
     # файли групи

@@ -1,24 +1,30 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<h2>Вхід до системи</h2>
 
+<div class="container vh-100 d-flex justify-content-center align-items-center">
 {% if form.errors %}
   <p style="color:red;">Неправильний логін або пароль. Спробуйте ще раз.</p>
 {% endif %}
-
-<form method="post">
+<form class="text-center" method="POST">
   {% csrf_token %}
-  <div>
-    <label for="id_username">Ім'я користувача:</label>
-    {{ form.username }}
-  </div>
-  <div>
-    <label for="id_password">Пароль:</label>
-    {{ form.password }}
-  </div>
-  <button type="submit">Увійти</button>
-</form>
+  <img class="mb-4" src={% static 'imgs/icon.png' %} alt="" width="72" height="110">
+    <h1 class="h3 mb-3 fw-normal">Будьласка увійдіть у систему</h1>
+
+    <label for="username">Username</label>
+    <div class="form-floating mb-3">
+      {{ form.username }}
+    </div>
+    <label for="password">Password</label>
+    <div class="form-floating">
+      {{ form.password }}
+    </div>
+
+    <button class="w-100 btn btn-lg mt-3 btn-success" type="submit">Вхід</button>
+  </form>
+</div>
 {% endblock %}
