@@ -76,13 +76,8 @@
     <!-- Основний контейнер -->
     <!-- <div class="container"> -->
     <!-- </div> -->
-    <div class="flex-grow-1 p-4">
+    <div class="flex-grow-1">
         {% block content %}
-        {% if user.is_authenticated %}
-            <h1>Вітаємо {{ user.username }}</h1>
-        {% else %}
-            <!-- Контент для неавторизованих користувачів -->
-        {% endif %}
         {% endblock %}
 </div>
 <!-- </div> -->
