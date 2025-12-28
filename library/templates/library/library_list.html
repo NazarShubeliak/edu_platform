@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container mt-4">
-  <h2>📚 Бібліотека</h2>
+  <h2>Бібліотека</h2>
     {% if user.role == 'admin' or user.role == 'teacher' %}
-    <a href="{% url 'upload_book' %}">Добавити книгу</a>
+    <a class="btn btn-success mb-2" href="{% url 'upload_book' %}">Добавити книгу</a>
     {% endif %}
   <!-- Алфавітна навігація -->
   <div class="mb-3">

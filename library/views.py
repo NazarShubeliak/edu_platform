@@ -42,4 +42,4 @@ def delete_book(request, pk):
     book = get_object_or_404(LibraryItem, pk=pk)
     if request.user == book.uploaded_by or request.user == "admin":
         book.delete()
-    return redirect("books_list")
+    return redirect("library_list")

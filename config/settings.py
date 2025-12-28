@@ -64,6 +64,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+MEDIAL_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
 ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
