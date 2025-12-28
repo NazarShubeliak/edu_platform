@@ -3,7 +3,7 @@
 {% block title %}Список груп{% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container mt-5">
     <h2 class="mb-4">Список груп</h2>
 
     <a href="{% url 'create_group' %}" class="btn btn-primary mb-3">Створити нову групу</a>
@@ -15,8 +15,7 @@
                     <div class="card-body">
                         <a href="{% url 'group_detail' pk=group.id %}">{{ group.name }}</a>
                         <p>Кількість студентів: {{ group.students.all|length }}</p>
-                        <a href="{% url 'group_delete' pk=group.id %}">Видалити<a>
-                        <a href="{% url 'upload_file' %}">Завантажити<a>
+                        <a class="btn btn-danger" href="{% url 'group_delete' pk=group.id %}">Видалити<a>
                     </div>
                 </div>
             </div>

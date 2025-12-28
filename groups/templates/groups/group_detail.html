@@ -10,7 +10,7 @@
     <h4>Студенти у групі:</h4>
     <ul>
         {% for student in students %}
-            <li>
+            <li class="mt-2">
                 {{ student.user.username }}
                 <form method="post" style="display:inline;">
                     {% csrf_token %}

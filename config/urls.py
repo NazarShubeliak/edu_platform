@@ -22,4 +22,5 @@ urlpatterns = [
     path("accounts/", include("accounts.urls")),
     path("", include("core.urls")),
     path("groups/", include("groups.urls")),
+    path("library/", include("library.urls")),
 ]

@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "accounts",
     "core",
     "groups",
+    "library",
 ]
 
 MIDDLEWARE = [
